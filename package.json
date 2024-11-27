@@ -1,0 +1,46 @@
+{
+  "name": "blockchain-data-analyzer",
+  "version": "1.0.0",
+  "author": {
+    "name": "Silvio Meneguzzo",
+    "email": "meneguzzosilvio@gmail.com"},
+  "description": "Blockchain data analysis tool for organizations",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "setup": "node -e \"require('fs-extra').ensureDirSync('data'); require('fs-extra').ensureDirSync('data/organizations'); require('fs-extra').writeJSONSync('data/registry.json', {}, { spaces: 2 });\"",
+    "clean": "rimraf dist data",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^9.15.0",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.1",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "axios": "^1.7.8",
+    "commander": "^12.1.0",
+    "csv-writer": "^1.6.0",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.4",
+    "fs-extra": "^11.2.0",
+    "winston": "^3.17.0",
+    "zod": "^3.23.8"
+  }
+}

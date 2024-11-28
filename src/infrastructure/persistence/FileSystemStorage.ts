@@ -234,21 +234,26 @@ export class FileSystemStorage implements IDataStorage {
                 { id: 'methodId', title: 'Method ID' },
                 { id: 'functionName', title: 'Function Name' }
             ],
-            // Ensure all fields are quoted to handle special characters
             fieldDelimiter: ',',
             recordDelimiter: '\n',
             alwaysQuote: true
         });
 
-        // Process transactions in smaller batches to avoid memory issues
+        // Process transactions in batches and handle null/undefined values
         const BATCH_SIZE = 1000;
         for (let i = 0; i < transactions.length; i += BATCH_SIZE) {
             const batch = transactions.slice(i, i + BATCH_SIZE);
             await csvWriter.writeRecords(batch.map(tx => ({
-                ...tx,
-                timeStamp: new Date(Number(tx.timeStamp) * 1000).toISOString(),
-                value: tx.value.toString(),
-                gasPrice: tx.gasPrice.toString(),
+                hash: tx.hash || '',
+                blockNumber: tx.blockNumber?.toString() || '',
+                timeStamp: tx.timeStamp ? new Date(Number(tx.timeStamp) * 1000).toISOString() : '',
+                from: tx.from || '',
+                to: tx.to || '',
+                value: tx.value?.toString() || '0',
+                gas: tx.gas?.toString() || '0',
+                gasPrice: tx.gasPrice?.toString() || '0',
+                isError: tx.isError?.toString() || '0',
+                txreceipt_status: tx.txreceipt_status?.toString() || '',
                 input: tx.input || '',
                 contractAddress: tx.contractAddress || '',
                 methodId: tx.methodId || '',
@@ -256,7 +261,7 @@ export class FileSystemStorage implements IDataStorage {
             })));
         }
 
-        const lastBlock = Math.max(...transactions.map(t => Number(t.blockNumber)));
+        const lastBlock = Math.max(...transactions.map(t => Number(t.blockNumber) || 0));
         await this.updateState(
             organizationName,
             type === 'normal' ? 'normal' : 'internal',

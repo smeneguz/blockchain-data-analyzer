@@ -3,19 +3,22 @@
   "version": "1.0.0",
   "author": {
     "name": "Silvio Meneguzzo",
-    "email": "meneguzzosilvio@gmail.com"},
+    "email": "meneguzzosilvio@gmail.com"
+  },
   "description": "Blockchain data analysis tool for organizations",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "setup": "node -e \"require('fs-extra').ensureDirSync('data'); require('fs-extra').ensureDirSync('data/organizations'); require('fs-extra').writeJSONSync('data/registry.json', {}, { spaces: 2 });\"",
+    "setup": "ts-node src/scripts/setup.ts",
     "clean": "rimraf dist data",
     "test": "jest",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "collect": "ts-node src/index.ts collect",
+    "collect:dev": "ts-node src/index.ts collect --verify"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
@@ -33,6 +36,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "alchemy-sdk": "^3.5.0",
     "axios": "^1.7.8",
     "commander": "^12.1.0",
     "csv-writer": "^1.6.0",

@@ -1,11 +1,10 @@
 // src/application/services/BlockchainService.ts
+import { EtherscanError } from '../../infrastructure/api/etherscan/EtherscanClient';
+import { ethers } from 'ethers';
 import { IBlockchainDataProvider } from '../../core/interfaces/IBlockchainDataProvider';
-import { IDataStorage } from '../../core/interfaces/IDataStorage';
+import { IDataStorage, StorageState } from '../../core/interfaces/IDataStorage';
 import { Organization, Transaction, TokenTransfer } from '../../core/entities';
 import { createLogger } from '../../infrastructure/logging/logger';
-import { EtherscanError } from '../../infrastructure/api/etherscan/EtherscanClient';
-import { StorageState } from '../../infrastructure/persistence/FileSystemStorage';
-import { ethers } from 'ethers';
 
 const logger = createLogger('BlockchainService');
 
